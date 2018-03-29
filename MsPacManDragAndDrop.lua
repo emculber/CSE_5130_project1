@@ -1,30 +1,63 @@
--- load namespace
 local socket = require("socket")
--- create a TCP socket and bind it to the local host, at any port
 local server = assert(socket.bind("*", 35029))
--- find out which port the OS chose for us
 local ip, port = server:getsockname()
--- print a message informing what's up
-print("Please telnet to localhost on port " .. port)
-print("After connecting, you have 10s to enter a line to be echoed")
+local client = nil;
+local skip = 0
+local lastInput = nil
 
+print("Listending over " .. ip .. " on port " .. port)
 
-function handleSocket()
-  local client = server:accept()
+local function connectSocket()
+  client = server:accept()
   print("Connected with the client")
-  client:settimeout(0)
-  local line, err = client:receive('*l')
-  print(line)
-  print(err)
-  if not err then client:send(line .. "\n") end
+  --client:settimeout(0)
+  defaultKeys = joypad.get(1)
+end
+
+local function handleSocket()
+  local line, err = client:receive()
+  print("Reciving line " .. line)
   return line
 end
 
-client:close()
+local function killSocketConnection()
+  client:close()
+end
 
+local function handleInput(input)
+  print("Setting input " .. input)
+  inputs = joypad.get(1)
+  inputs[input] = true
+  if(lastInput ~= nil) then
+    inputs[lastInput] = false
+  end
+  joypad.set(1, inputs)
+  lastInput = value
+end
+
+local function getInputs()
+  return "temp"
+end
+
+connectSocket()
 while true do
-  request = handleSocket()
-  print(request)
+  if skip == 0 then
+    print("waiting for message")
+    request = handleSocket()
+    sentType, value = request:match("([^:]+):([^:]+)")
+
+    if sentType == "key" then
+      handleInput(value)
+    elseif sentType == "get" then
+      client:send(getInputs() .. "\n")
+    elseif sentType == "skip" then
+      print("Setting skip to " .. value)
+      skip = tonumber(value)
+    end
+  else
+    print("skipping socket listener")
+    skip = skip - 1
+  end
   
 --	inpt = input.get();
 --  inputs = joypad.get(1);
