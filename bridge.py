@@ -1,5 +1,7 @@
 import socket               # Import socket module
 import time
+import cv2
+from PIL import Image
 
 class Bridge:
 
@@ -30,10 +32,19 @@ class Bridge:
             raise RuntimeError("socket connection broken")
         return chunk
     
+    def getScreen(self):
+        chunk = self.askAndYouShalReceive("screen:single")
+        if chunk == 'ready':
+            print("Reading Screen")
+            screen = cv2.imread('screen.png')
+        return screen
+    
 if __name__ == "__main__":
     bridge = Bridge()
     bridge.connectToSocket()
-    bridge.askAndYouShalReceive("get:inputs")
+    screen = bridge.getScreen()
+    img = Image.fromarray(screen, 'RGB')
+    img.show()
 
 
     #bridge.sendAndForget("key:start");
