@@ -43,6 +43,7 @@ if __name__ == "__main__":
     bridge = Bridge()
     bridge.connectToSocket()
     screen = bridge.getScreen()
+    print(screen.shape)
     img = Image.fromarray(screen, 'RGB')
     img.show()
 
@@ -52,8 +53,8 @@ if __name__ == "__main__":
     #bridge.sendAndForget("skip:100");
     #while True:
     #    bridge.sendAndForget("key:right");
-    #    bridge.sendAndForget("skip:30");
+    #    bridge.sendAndForget("skip:31");
     #    time.sleep(1);
     #    bridge.sendAndForget("key:left");
-    #    bridge.sendAndForget("skip:30");
-    #    time.sleep(1);
+    #    bridge.sendAndForget("skip:31");
+    #    time.sleep(2);

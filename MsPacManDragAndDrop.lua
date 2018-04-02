@@ -22,6 +22,7 @@ local function handleSocket()
 end
 
 local function killSocketConnection()
+  print("Closing Connections")
   client:close()
 end
 
@@ -37,11 +38,37 @@ local function handleInput(input)
 end
 
 local function getInputs()
-  return "temp"
+  --return table_to_string(joypad.get(1))
+  return "[up,left,right,down]"
 end
 
 local function screenshot()
   gui.savescreenshotas("screen.png")
+end
+
+function table_to_string(tbl)
+  local result = "{"
+  for k, v in pairs(tbl) do
+    -- Check the key type (ignore any numerical keys - assume its an array)
+    if type(k) == "string" then
+      result = result.."[\""..k.."\"]".."="
+    end
+
+    -- Check the value type
+    if type(v) == "table" then
+      result = result..table_to_string(v)
+    elseif type(v) == "boolean" then
+      result = result..tostring(v)
+    else
+      result = result.."\""..v.."\""
+    end
+    result = result..","
+  end
+  -- Remove leading commas from the result
+  if result ~= "" then
+    result = result:sub(1, result:len()-1)
+  end
+  return result.."}"
 end
 
 connectSocket()
@@ -62,6 +89,8 @@ while true do
     elseif sentType == "skip" then
       print("Setting skip to " .. value)
       skip = tonumber(value)
+    elseif sentType == "close" then
+      killSocketConnection()
     end
   else
     print("skipping socket listener")
