@@ -20,7 +20,7 @@ class Bridge:
     
     def sendAndForget(self, msg):
         sent = self.sock.send(msg + '\n')
-        print sent;
+        print(sent)
         if sent == 0:
             raise RuntimeError("socket connection broken")
     
