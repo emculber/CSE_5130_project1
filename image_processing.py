@@ -3,47 +3,60 @@ processes the images and returns a numpy array with the most significant feature
 "python.linting.pylintArgs": ["--extension-pkg-whitelist=numpy,cv2,PIL"]
 """
 
-<<<<<<< Updated upstream
-import cv2 as cv
-import numpy as np
-import PIL
-=======
-import sys
->>>>>>> Stashed changes
-
 import cv2 as cv
 import numpy as np
 from PIL import Image
 
-def process_image(im):
+def process_image(path):
     """
     for now it converts the image to a numpy array
     """
-<<<<<<< Updated upstream
     im = cv.imread(path)
     gr = cv.cvtColor(im, cv.COLOR_BGR2GRAY)
+    #gr = cv.GaussianBlur(gr, (0,0), 2, 2)
 
+    #try to find the background color
+    #usually the color with the highest amount
     cr = find_colors(gr)
-    cs = sorted(cr.keys(), reverse=True)
+    bc = sorted(cr.keys())
+    print(bc)
 
-    print(cr)
-    grr = reduce_color_range(gr, cs[0], cs[1])
+    #going over the image and finding object that are not background
+    #ob = {0 : (bc[0], [])}
+    ob = {}
 
-    print(find_colors(grr))
+    #ed = cv.Canny(gr, bc[1], bc[-1], 3)
 
-    cv.imshow('grey', grr)
+    for row in range(gr.shape[0]):
+        for col in range(gr.shape[1]):
+            if gr[row][col] != bc[0]:
+                check_surroundings(ob, row, col, gr[row][col])
+            #else:
+            #    ob[0][1].append((row, col))
+
+    print(ob)
+    #for_del = []
+
+    #for key, items in ob:
+        #for pos in items[1]:
+
+
+    cv.imshow('grey', gr)
     cv.waitKey(0)
     cv.destroyAllWindows()
 
-def reduce_color_range(ar, rpc, rdc):
-    c = np.copy(ar)
+    return ob
 
-    for row in range(len(c)):
-        for col in range(c[row]):
-            if c[row][col] == rpc:
-                c[row][col] = rdc
+def check_surroundings(dic, x, y, clr):
+    if not dic:
+        dic[0] = (clr,[(x, y)])
+    else:
+        for key, items in dic.items():
+            if clr == items[0] and ((x-1, y-1) in items[1] or (x-1, y) in items[1] or (x, y-1) in items[1]):
+                dic[key][1].append((x, y))
+                return
 
-    return c
+        dic[max(dic.keys())+1] = (clr,[(x, y)])
 
 def find_colors(ar):
     c = dict()
@@ -58,11 +71,3 @@ def find_colors(ar):
 
 process_image('./screenshots/frame500')
 process_image('./screenshots/frame626')
-=======
-
-    img = Image.fromarray(im, 'RGB')
-    img.convert('L')
-    img.show()
-
-process_image(cv.imread('./screenshots/frame0'))
->>>>>>> Stashed changes
