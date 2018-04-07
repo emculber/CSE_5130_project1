@@ -3,14 +3,23 @@ processes the images and returns a numpy array with the most significant feature
 "python.linting.pylintArgs": ["--extension-pkg-whitelist=numpy,cv2,PIL"]
 """
 
+<<<<<<< Updated upstream
 import cv2 as cv
 import numpy as np
 import PIL
+=======
+import sys
+>>>>>>> Stashed changes
 
-def process_image(path):
+import cv2 as cv
+import numpy as np
+from PIL import Image
+
+def process_image(im):
     """
     for now it converts the image to a numpy array
     """
+<<<<<<< Updated upstream
     im = cv.imread(path)
     gr = cv.cvtColor(im, cv.COLOR_BGR2GRAY)
 
@@ -49,3 +58,11 @@ def find_colors(ar):
 
 process_image('./screenshots/frame500')
 process_image('./screenshots/frame626')
+=======
+
+    img = Image.fromarray(im, 'RGB')
+    img.convert('L')
+    img.show()
+
+process_image(cv.imread('./screenshots/frame0'))
+>>>>>>> Stashed changes
