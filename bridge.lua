@@ -5,6 +5,7 @@ local client = nil;
 local skip = 0
 local lastInput = nil
 local dontRender = false
+local points = 0
 
 print("Listending over " .. ip .. " on port " .. port)
 
@@ -17,7 +18,7 @@ end
 
 local function handleSocket()
   local line, err = client:receive()
-  print("Reciving line " .. line)
+  --print("Reciving line " .. line)
   return line
 end
 
@@ -27,7 +28,8 @@ local function killSocketConnection()
 end
 
 local function handleInput(input)
-  print("Setting input " .. input)
+  --print("Setting input " .. input)
+  emu.message(input);
   inputs = joypad.get(1)
   inputs[input] = true
   if(lastInput ~= nil) then
@@ -71,31 +73,74 @@ function table_to_string(tbl)
   return result.."}"
 end
 
+function loadState()
+  state = savestate.create(1)
+  savestate.load(state)
+  points = 0
+end
+
+function setPoints()
+  possible_points = memory.readbyterange(0x0308,7)
+  possible_points = possible_points:gsub('[^0-9]','')
+  if possible_points == '' then
+    possible_points = "-1"
+  end
+  possible_points = tonumber(possible_points)
+  if possible_points > points and possible_points < (points + 1011) then
+      points = possible_points
+  elseif possible_points == 0 then
+    points = 0
+  end
+end
+
 connectSocket()
 while true do
   if skip == 0 then
-    print("waiting for message")
+    --print("waiting for message")
     request = handleSocket()
     sentType, value = request:match("([^:]+):([^:]+)")
 
     if sentType == "key" then
       handleInput(value)
+      skip = 10
     elseif sentType == "get" then
       client:send(getInputs())
     elseif sentType == "screen" then
       screenshot()
       client:send("ready")
       dontRender = true
+    elseif sentType == "location" then
+      mspacman = { x = memory.readbyte(0x0060), y = memory.readbyte(0x0062) };
+      client:send(mspacman['x'] .. "," .. mspacman['y'])
+      dontRender = true
+    elseif sentType == "points" then
+      client:send(points)
+      dontRender = true
+    elseif sentType == "reset" then
+      loadState()
+      dontRender = true
+    elseif sentType == "done" then
+      done = memory.readbyte(0x003f)
+      if done == 2 then
+        client:send('True')
+      else
+        client:send('False')
+      end
+      dontRender = true
     elseif sentType == "skip" then
-      print("Setting skip to " .. value)
+      --print("Setting skip to " .. value)
       skip = tonumber(value)
     elseif sentType == "close" then
       killSocketConnection()
     end
   else
-    print("skipping socket listener")
+    --print("skipping socket listener")
     skip = skip - 1
+    if skip == 0 then
+      client:send("Finished")
+    end
   end
+  setPoints()
   if dontRender == false then
     FCEU.frameadvance();
   end

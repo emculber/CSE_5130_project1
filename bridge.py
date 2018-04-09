@@ -6,7 +6,9 @@ from PIL import Image
 class Bridge:
 
     def __init__(self):
-        self.data = []
+        self.time = 0
+        self.x = 0
+        self.y = 0
 
     def connectToSocket(self):
         s = socket.socket()         # Create a socket object
@@ -20,14 +22,12 @@ class Bridge:
     
     def sendAndForget(self, msg):
         sent = self.sock.send(msg + '\n')
-        print sent;
         if sent == 0:
             raise RuntimeError("socket connection broken")
     
     def askAndYouShalReceive(self, msg):
         self.sendAndForget(msg)
         chunk = self.sock.recv(1048)
-        print(chunk)
         if chunk == '':
             raise RuntimeError("socket connection broken")
         return chunk
@@ -35,9 +35,33 @@ class Bridge:
     def getScreen(self):
         chunk = self.askAndYouShalReceive("screen:single")
         if chunk == 'ready':
-            print("Reading Screen")
             screen = cv2.imread('screen.png')
         return screen
+
+    def cord(self):
+        xy = self.askAndYouShalReceive("location:get")
+        x, y = xy.split(",")
+        return int(x), int(y)
+
+    def reset(self):
+        self.sendAndForget("reset:true")
+
+    def step(self, action):
+        self.askAndYouShalReceive("key:" + action);
+        x, y = self.cord()
+        screen = None
+        # screen = self.getScreen()
+        reward = int(self.askAndYouShalReceive("points:get"))
+        sdone = self.askAndYouShalReceive("done:get")
+        done = False
+        if sdone == 'True':
+            done = True
+
+        if self.x != x and self.y != y:
+            self.time+=1
+        self.x = x
+        self.y = y
+        return x, y, screen, reward, done
     
 if __name__ == "__main__":
     bridge = Bridge()
