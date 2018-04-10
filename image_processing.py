@@ -17,23 +17,23 @@ class g_obj(list):
         stores the coordinates for the object on screen and stores a bounding box
         """
         super().__init__()
-        self.tl_x = sys.maxsize
-        self.tl_y = sys.maxsize
-        self.br_x = 0
-        self.br_y = 0
+        self.left = sys.maxsize
+        self.top = sys.maxsize
+        self.right = 0
+        self.bottom = 0
         self.color = clr
 
     def append(self, z):
         super().append(z)
-        if z[0] < self.tl_x:
-            self.tl_x = z[0]
-        if z[0] > self.br_x:
-            self.br_x = z[0]
+        if z[0] < self.left:
+            self.left = z[0]
+        if z[0] > self.right:
+            self.right = z[0]
 
-        if z[1] < self.tl_y:
-            self.tl_y = z[1]
-        if z[1] > self.br_y:
-            self.br_y = z[1]
+        if z[1] < self.top:
+            self.top = z[1]
+        if z[1] > self.bottom:
+            self.bottom = z[1]
 
     def check_lst(self, z):
         """
@@ -48,10 +48,25 @@ class g_obj(list):
         """
         checks a coordinate against the bounding box of the object
         """
-        if z[0] >= self.tl_x and z[0] <= self.br_x:
-            if z[1] >= self.tl_y and z[1] <= self.br_y:
+        if z[0] >= self.left and z[0] <= self.right:
+            if z[1] >= self.top and z[1] <= self.bottom:
                 return True
         return False
+
+    def merge(self, o):
+        self += o
+
+        if o.left < self.left:
+            self.left = o.left
+
+        if o.top < self.top:
+            self.top = o.top
+
+        if o.right > self.right:
+            self.right = o.right
+
+        if o.bottom > self.bottom:
+            self.bottom = o.bottom
 
 
 def process_image(path):
@@ -67,6 +82,7 @@ def process_image(path):
     cr, cs = find_colors(gr)
     bc = sorted(cr, key=cr.get, reverse=True) #bc[0] is the highest amount of color
 
+    #build the list of actually usable positions
     sc = []
     for k, i in cs.items():
         if k != bc[0]:
@@ -74,23 +90,30 @@ def process_image(path):
 
     #going over the image and finding object that are not background
     sc0 = (sc[0][0], sc[0][1])
-    ob = {0 : g_obj(gr[sc0[0]][sc0[1]]).append(sc0)}
-    ob_map = {sc0 : [0]} #maps positions to objects more space needed but less time
+    ob = [g_obj(gr[sc0[0]][sc0[1]])]
+    ob[0].append(sc0)
+    ob_map = {sc0 : 0} #maps positions to objects more space needed but less time
 
-    def _bld(z):
-        for i in z:
-            if (i[0], i[1]) in ob_map:
-                tmp = ob_map[(i[0], i[1])]
-                for j in tmp:
-                    yield j
+    def _m2o(pl):
+        ts = set()
+        for p in pl:
+            if p in ob_map:
+                ts.add(ob_map[p])
+        for t in ts:
+            yield t
 
     for x, y in sc[1:]:
-        for i in _bld([(x-1, y-1), (x-1, y), (x, y-1)]):
-            if gr[x][y] == ob[i].color and ob[i].check((x, y)):
+        match = False
+        for i in _m2o([(x-1, y-1), (x-1, y), (x, y-1), (x+1, y-1)]): #refine obj detection using g_obj merge
+            if gr[x][y] == ob[i].color:
                 ob[i].append((x, y))
-                ob_map[(x, y)].append(i)
+                ob_map[(x, y)] = i
+                match = True
                 break
-            ob[max(ob.keys())+1] = g_obj(gr[x][y]).append((x, y))
+        if not match:
+            ob.append(g_obj(gr[x][y]))
+            ob[-1].append((x, y))
+            ob_map[(x, y)] = len(ob)-1
 
     cv.imshow('grey', gr)
     cv.waitKey(0)
