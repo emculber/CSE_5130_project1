@@ -54,6 +54,9 @@ class g_obj(list):
         return False
 
     def merge(self, o):
+        """
+        merges o into self
+        """
         self += o
 
         if o.left < self.left:
@@ -79,49 +82,64 @@ def process_image(path):
 
     #try to find the background color
     #usually the color with the highest amount
-    cr, cs = find_colors(gr)
+    cr, cs, dv, dl = pre_process(gr)
     bc = sorted(cr, key=cr.get, reverse=True) #bc[0] is the highest amount of color
+    bkg = bc[0]
 
     #build the list of actually usable positions
     sc = []
     for k, i in cs.items():
-        if k != bc[0]:
+        if k != bkg:
             sc += i
 
     #going over the image and finding object that are not background
     sc0 = (sc[0][0], sc[0][1])
-    ob = [g_obj(gr[sc0[0]][sc0[1]])]
+    ob = {0: g_obj(gr[sc0[0]][sc0[1]])}
     ob[0].append(sc0)
     ob_map = {sc0 : 0} #maps positions to objects more space needed but less time
 
-    def _m2o(pl):
+    def _m2o(clr, pl):
+        """
+        returns a list of unique objects around the pos
+        """
         ts = set()
         for p in pl:
             if p in ob_map:
-                ts.add(ob_map[p])
-        for t in ts:
-            yield t
+                if ob[ob_map[p]].color == clr:  
+                    ts.add(ob_map[p])
+        return list(ts)
 
     for x, y in sc[1:]:
-        match = False
-        for i in _m2o([(x-1, y-1), (x-1, y), (x, y-1), (x+1, y-1)]): #refine obj detection using g_obj merge
-            if gr[x][y] == ob[i].color:
-                ob[i].append((x, y))
-                ob_map[(x, y)] = i
-                match = True
-                break
-        if not match:
-            ob.append(g_obj(gr[x][y]))
-            ob[-1].append((x, y))
-            ob_map[(x, y)] = len(ob)-1
+        ls = _m2o(gr[x][y], [(x-1, y-1), (x-1, y), (x, y-1), (x+1, y-1)]) #refine obj detection using g_obj merge
+        g = g_obj(gr[x][y])
+        g.append((x, y))
+        ind = max(ob.keys())+1
 
-    cv.imshow('grey', gr)
+        if len(ls) is 1:
+            ob[ls[0]].append((x, y))
+            ob_map[(x, y)] = ls[0]
+            continue
+
+        elif len(ls) > 1:
+            for o in ls:
+                g.merge(ob[o])
+                for obp in ob[o]:
+                    ob_map[obp] = ind
+                del ob[o]
+
+        ob[ind] = g
+        ob_map[(x, y)] = ind
+
+    for k, v in ob.items():
+        cv.rectangle(im, (v.top, v.left), (v.bottom, v.right), (0, 255, 0))
+
+    cv.imshow('grey', im)
     cv.waitKey(0)
     cv.destroyAllWindows()
 
     return ob
 
-def find_colors(ar):
+def pre_process(ar, old=None):
     """
     finds the different colors in the image
     returns a dict of colors with the amounts
@@ -129,6 +147,8 @@ def find_colors(ar):
     """
     a = dict()
     b = dict()
+    c = 0
+    d = []
 
     for row in range(ar.shape[0]):
         for col in range(ar.shape[1]):
@@ -139,7 +159,13 @@ def find_colors(ar):
             else:
                 a[ac] = 1
                 b[ac] = [(row, col)]
-    return a, b
+
+            if old != None:
+                if ac != old[row][col]:
+                    c += 1
+                    d.append(old[row][col])
+
+    return a, b, c, d
 
 process_image('./screenshots/frame20')
 process_image('./screenshots/frame626')
