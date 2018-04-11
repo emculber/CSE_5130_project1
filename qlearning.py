@@ -5,12 +5,15 @@ Author: Moustafa Alzantot (malzantot@ucla.edu)
 import numpy as np
 from bridge import Bridge
 
+log = 'debug'
+
 np.set_printoptions(threshold=np.inf)
 
-screen_size_x = 1000
-screen_size_y = 1000
+screen_size_x = 256
+screen_size_y = 224
 n_states = 40
 iter_max = 1000000
+current_frame = 0
 
 initial_lr = 1.0 # Learning rate
 min_lr = 0.003
@@ -45,7 +48,7 @@ if __name__ == '__main__':
     bridge.connectToSocket()
     np.random.seed(0)
     print ('----- using Q Learning -----')
-    q_table = np.zeros((screen_size_x, screen_size_y, 4))
+    q_table = np.zeros(screen_size_x, screen_size_y, 4))
     for i in range(iter_max):
         bridge.reset()
         total_reward = 0
@@ -55,25 +58,39 @@ if __name__ == '__main__':
             x, y = bridge.cord()
             x = int(x)
             y = int(y)
+            print("(" + str(x) + "," + str(y) + "): " + str(q_table[x][y]))
             if np.random.uniform(0, 1) < eps:
                 action = np.random.choice(inputs)
-                print("Getting Random Action: " + action)
+                #print("Getting Random Action: " + action)
             else:
-                logits = q_table[x][y] / np.linalg.norm(q_table[x][y])
+                logits = q_table[x][y]
                 logits_exp = np.exp(logits)
                 probs = logits_exp / np.sum(logits_exp)
                 action = np.random.choice(inputs, p=probs)
-                print("Getting Set Action: " + action + " With Probabilities: " + str(probs))
+                #print("Getting Set Action: " + action + " With Probabilities: " + str(probs))
             x_, y_, screen, reward, done = bridge.step(action)
-            total_reward = reward
+            total_reward += reward
+            if done:
+                reward = -100
             # update q table
             action_n = inputs.index(action)
             # print("Action: " + action + "(" + str(action_n) + ")")
             print("Before Set: " + str(x) + ", " + str(y) + " = " + str(q_table[x][y]) + " (" + str(q_table[x][y][action_n]) + ")")
-            if(x != x_ or y != y_):
-                q_table[x][y][action_n] = q_table[x][y][action_n] + eta * (reward + gamma *  np.max(q_table[x_][y_]) - q_table[x][y][action_n])
+
+            print("Setting " + action + " (" + str(action_n) + ") = " + str(reward))
+            if(x != x_): 
+                # q_table[x][y][action_n] = q_table[x][y][action_n] + eta * (reward + gamma *  np.max(q_table[x_][y_]) - q_table[x][y][action_n])
+                q_table[x][y][action_n] = q_table[x][y][action_n] + reward
+            elif(y != y_):
+                # q_table[x][y][action_n] = q_table[x][y][action_n] + eta * (reward + gamma *  np.max(q_table[x_][y_]) - q_table[x][y][action_n])
+                q_table[x][y][action_n] = q_table[x][y][action_n] + reward
+            # else:
+                # q_table[x][y][action_n] = q_table[x][y][action_n] - 10
+
+
             print("After Set: " + str(x) + ", " + str(y) + " = " + str(q_table[x][y]) + " (" + str(q_table[x][y][action_n]) + ")")
 
+            current_frame += 1
             if done:
                 break
         print('Iteration #%d -- Total reward = %d.' %(i+1, total_reward))
