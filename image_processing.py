@@ -78,7 +78,6 @@ def process_image(path):
     """
     im = cv.imread(path)
     gr = cv.cvtColor(im, cv.COLOR_BGR2GRAY)
-    #gr = cv.GaussianBlur(gr, (0,0), 2, 2)
 
     #try to find the background color
     #usually the color with the highest amount
@@ -105,7 +104,7 @@ def process_image(path):
         ts = set()
         for p in pl:
             if p in ob_map:
-                if ob[ob_map[p]].color == clr:  
+                if ob[ob_map[p]].color == clr:
                     ts.add(ob_map[p])
         return list(ts)
 
@@ -130,10 +129,10 @@ def process_image(path):
         ob[ind] = g
         ob_map[(x, y)] = ind
 
-    for k, v in ob.items():
-        cv.rectangle(im, (v.top, v.left), (v.bottom, v.right), (0, 255, 0))
+    #for k, v in ob.items():
+    #    cv.rectangle(im, (v.top, v.left), (v.bottom, v.right), (0, 255, 0))
 
-    cv.imshow('grey', im)
+    cv.imshow('grey', im)#cv.resize(cv.resize(im, (0,0), fx=0.25, fy=0.25), (im.shape[1], im.shape[0])))
     cv.waitKey(0)
     cv.destroyAllWindows()
 
@@ -167,5 +166,4 @@ def pre_process(ar, old=None):
 
     return a, b, c, d
 
-process_image('./screenshots/frame20')
 process_image('./screenshots/frame626')
