@@ -2,6 +2,7 @@ import socket               # Import socket module
 import time
 import cv2
 from PIL import Image
+import numpy
 
 class Bridge:
 
@@ -37,6 +38,14 @@ class Bridge:
         if chunk == 'ready':
             screen = cv2.imread('screen.png')
         return screen
+
+    def getPixelScreen(self):
+        screen = self.getScreen()
+        pixelSize = 8
+        image = Image.fromarray(screen)
+        image = image.resize((image.size[0]/pixelSize, image.size[1]/pixelSize), Image.NEAREST)
+        # image = image.resize((image.size[0]*pixelSize, image.size[1]*pixelSize), Image.NEAREST)
+        return numpy.array(image)
 
     def cord(self):
         xy = self.askAndYouShalReceive("location:get")

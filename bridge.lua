@@ -3,9 +3,10 @@ local server = assert(socket.bind("*", 35029))
 local ip, port = server:getsockname()
 local client = nil;
 local skip = 0
-local lastInput = nil
+local lastInput = 'none'
 local dontRender = false
 local points = 0
+local diff_points = 0
 
 print("Listending over " .. ip .. " on port " .. port)
 
@@ -31,10 +32,11 @@ local function handleInput(input)
   --print("Setting input " .. input)
   emu.message(input);
   inputs = joypad.get(1)
-  inputs[input] = true
   if(lastInput ~= nil) then
     inputs[lastInput] = false
+    joypad.set(1, inputs)
   end
+  inputs[input] = true
   joypad.set(1, inputs)
   lastInput = value
 end
@@ -74,8 +76,10 @@ function table_to_string(tbl)
 end
 
 function loadState()
+  emu.softreset()
   state = savestate.create(1)
   savestate.load(state)
+  emu.speedmode("turbo")
   points = 0
 end
 
@@ -87,7 +91,8 @@ function setPoints()
   end
   possible_points = tonumber(possible_points)
   if possible_points > points and possible_points < (points + 1011) then
-      points = possible_points
+    diff_points = possible_points - points
+    points = possible_points
   elseif possible_points == 0 then
     points = 0
   end
@@ -102,7 +107,8 @@ while true do
 
     if sentType == "key" then
       handleInput(value)
-      skip = 10
+      diff_points = 0
+      skip = 5
     elseif sentType == "get" then
       client:send(getInputs())
     elseif sentType == "screen" then
@@ -114,7 +120,8 @@ while true do
       client:send(mspacman['x'] .. "," .. mspacman['y'])
       dontRender = true
     elseif sentType == "points" then
-      client:send(points)
+      client:send(diff_points)
+      diff_points = 0
       dontRender = true
     elseif sentType == "reset" then
       loadState()
@@ -132,6 +139,7 @@ while true do
       skip = tonumber(value)
     elseif sentType == "close" then
       killSocketConnection()
+      connectSocket()
     end
   else
     --print("skipping socket listener")
@@ -142,6 +150,7 @@ while true do
   end
   setPoints()
   if dontRender == false then
+    emu.message(lastInput);
     FCEU.frameadvance();
   end
   dontRender = false
