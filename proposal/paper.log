@@ -1,0 +1,277 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6650) (preloaded format=pdflatex 2018.4.3)  17 APR 2018 17:56
+entering extended mode
+**./paper.tex
+(paper.tex
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 75 language(s) loaded.
+(/home/lisko/.miktex/texmfs/install/tex/latex/ieeetran/IEEEtran.cls
+Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
+-- See the "IEEEtran_HOWTO" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/
+\@IEEEtrantmpdimenA=\dimen102
+\@IEEEtrantmpdimenB=\dimen103
+\@IEEEtrantmpdimenC=\dimen104
+\@IEEEtrantmpcountA=\count79
+\@IEEEtrantmpcountB=\count80
+\@IEEEtrantmpcountC=\count81
+\@IEEEtrantmptoksA=\toks14
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 503.
+
+(/home/lisko/.miktex/texmfs/install/tex/latex/psnfss/ot1ppl.fd
+File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
+)
+-- Using IEEE Computer Society mode.
+-- Using 8.5in x 11in (letter) paper.
+-- Using PDF output.
+\@IEEEnormalsizeunitybaselineskip=\dimen105
+-- This is a 12 point document.
+\CLASSINFOnormalsizebaselineskip=\dimen106
+\CLASSINFOnormalsizeunitybaselineskip=\dimen107
+\IEEEnormaljot=\dimen108
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <6.02249> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <6.02249> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <8.03> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <8.03> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <9.03374> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <9.03374> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10.03749> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <10.03749> not available
+
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12.045> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <12.045> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <14.05249> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <14.05249> not available
+
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <20.075> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <20.075> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <22.08249> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <22.08249> not available
+
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <24.09> not available
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <24.09> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1090.
+
+\IEEEquantizedlength=\dimen109
+\IEEEquantizedlengthdiff=\dimen110
+\IEEEquantizedtextheightdiff=\dimen111
+\IEEEilabelindentA=\dimen112
+\IEEEilabelindentB=\dimen113
+\IEEEilabelindent=\dimen114
+\IEEEelabelindent=\dimen115
+\IEEEdlabelindent=\dimen116
+\IEEElabelindent=\dimen117
+\IEEEiednormlabelsep=\dimen118
+\IEEEiedmathlabelsep=\dimen119
+\IEEEiedtopsep=\skip41
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@IEEEsubequation=\count86
+\abovecaptionskip=\skip42
+\belowcaptionskip=\skip43
+\c@figure=\count87
+\c@table=\count88
+\@IEEEeqnnumcols=\count89
+\@IEEEeqncolcnt=\count90
+\@IEEEsubeqnnumrollback=\count91
+\@IEEEquantizeheightA=\dimen120
+\@IEEEquantizeheightB=\dimen121
+\@IEEEquantizeheightC=\dimen122
+\@IEEEquantizeprevdepth=\dimen123
+\@IEEEquantizemultiple=\count92
+\@IEEEquantizeboxA=\box26
+\@IEEEtmpitemindent=\dimen124
+\IEEEPARstartletwidth=\dimen125
+\c@IEEEbiography=\count93
+\@IEEEtranrubishbin=\box27
+) (paper.aux)
+\openout1 = `paper.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 370.
+LaTeX Font Info:    ... okay on input line 370.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 370.
+LaTeX Font Info:    ... okay on input line 370.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 370.
+LaTeX Font Info:    ... okay on input line 370.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 370.
+LaTeX Font Info:    ... okay on input line 370.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 370.
+LaTeX Font Info:    ... okay on input line 370.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 370.
+LaTeX Font Info:    ... okay on input line 370.
+
+-- Lines per column: 49 (exact).
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 378.
+
+(/home/lisko/.miktex/texmfs/install/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Calculating math sizes for size <14.05249> on input line 37
+8.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.05249> on input line 378.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9.83669> on input line 378.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7.02625> on input line 378.
+LaTeX Font Info:    Try loading font information for U+pzd on input line 378.
+
+(/home/lisko/.miktex/texmfs/install/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14.05249> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 380.
+LaTeX Font Info:    Font shape `OT1/phv/bx/sc' in size <14.05249> not available
+
+(Font)              Font shape `OT1/phv/b/sc' tried instead on input line 380.
+
+Underfull \hbox (badness 1888) in paragraph at lines 384--385
+\OT1/ppl/m/n/12.045 Current re-search into ar-ti-fi-cial learn-ing in
+ []
+
+[1{/home/lisko/.miktex/texmfs/data/pdftex/config/pdftex.map}
+
+
+]
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+ [2]
+Underfull \hbox (badness 6876) in paragraph at lines 430--430
+ \OT1/phv/b/sc/14.05249 8 NEAT (Neuro-Evolution Aug-
+ []
+
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ô in font pplr7t!
+
+Underfull \vbox (badness 1365) has occurred while \output is active []
+
+ [3]
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ú in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ù in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ú in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ù in font pplr7t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 460--461
+[]\OT1/ppl/m/n/9.03374 J. Brad-berry, In-tro-duc-tion to Monte
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 460--461
+\OT1/ppl/m/n/9.03374 Carlo Tree Search, 2015. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 460--461
+\OT1/ppl/m/n/9.03374 https://jeffbradberry.com/posts/2015/09/intro-to-monte-
+ []
+
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ú in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ù in font pplr7t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 463--464
+\OT1/ppl/m/n/9.03374 Cart-Pole bal-anc-ing en-vi-ron-ment, 2017. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 463--464
+\OT1/ppl/m/n/9.03374 https://pythonprogramming.net/openai-cartpole-neural-
+ []
+
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ú in font pplr7t!
+Missing character: There is no ‚ in font pplr7t!
+Missing character: There is no Ä in font pplr7t!
+Missing character: There is no ù in font pplr7t!
+
+Underfull \hbox (badness 1635) in paragraph at lines 466--467
+[]\OT1/ppl/m/n/9.03374 J. Levine, Monte Carlo Tree Search, 2017. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
+[]\OT1/ppl/m/n/9.03374 K. Stan-ley, R. Mi-ikku-lainen, "Evolv-ing Neu-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
+\OT1/ppl/m/n/9.03374 ral Net-works through Aug-ment-ing Topolo-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
+\OT1/ppl/m/n/9.03374 gies", The MIT Press Jour-nals, 2002. Avail-able:
+ []
+
+
+Overfull \hbox (11.11412pt too wide) in paragraph at lines 469--470
+\OT1/ppl/m/n/9.03374 http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf 
+
+ []
+
+[4
+
+] (paper.aux) ) 
+Here is how much of TeX's memory you used:
+ 1133 strings out of 493306
+ 20907 string characters out of 3135957
+ 80342 words of memory out of 3000000
+ 4742 multiletter control sequences out of 15000+200000
+ 31800 words of font info for 70 fonts, out of 3000000 for 9000
+ 1144 hyphenation exceptions out of 8191
+ 28i,5n,22p,1209b,262s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/home/lisko/.miktex/texmfs/install/fonts/enc/dvips/base/8r.enc}
+</home/lisko/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvb8a.pfb></home/
+lisko/.miktex/texmfs/install/fonts/type1/urw/helvetic/uhvr8a.pfb></home/lisko/.
+miktex/texmfs/install/fonts/type1/urw/palatino/uplb8a.pfb></home/lisko/.miktex/
+texmfs/install/fonts/type1/urw/palatino/uplr8a.pfb></home/lisko/.miktex/texmfs/
+install/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on paper.pdf (4 pages, 76687 bytes).
+PDF statistics:
+ 36 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
