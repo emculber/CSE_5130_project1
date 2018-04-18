@@ -365,7 +365,8 @@ pdfkeywords={Computer Society, IEEEtran, journal, LaTeX, paper,
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
-
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 
 \begin{document}
 \title{Image Processing for Discovering\\ the Rules of Video Games}
@@ -407,16 +408,19 @@ Our bridge script was used as a way to connect the chosen emulator (FCEUX) with 
 \textbf{Get Palet Count}
 
 \section{Image Processing}
-The image processing algorithm gets the image from the lua bridge and applies the following operations to identify object in an image and pass them on to the Q-Learning/NEAT algorithms.
+The image processing algorithm gets the image from the lua bridge and applies the following operations to identify object in an image and pass them on to the Q-Learning/NEAT algorithms.\\ \\
+\includegraphics[scale=0.45]{frame626}
 
 \textbf{Image to Image Delta:}
 If the current image is not the first image processed, then the algorithm will compare the previous image to the current one and depending on the delta-score it will decide whether the current image is different enough to warrant a complete reprocessing of the current image or if it is sufficient to just process the regions of the image that have changed.
 
 \textbf{Change Resolution:}
-The resolution is being reduced to reduce the information density with the thought that only the most prominent features will be available afterwards. This works well for finding characters and objects in the image but most of the time any text based information like the score is lost.
+The resolution is being reduced to reduce the information density with the thought that only the most prominent features will be available afterwards. This works well for finding characters and objects in the image but most of the time any text based information like the score is lost.\\ \\
+\includegraphics[scale=3]{6xdown}
 
 \textbf{Convert to Grayscale:}
-This steps helps improve the speed of the algorithm since the algorithm has to only deal with 8-bits of color instead of 24-bits. The grayscale conversion function can be provided with weight parameters for red, green and blue (RGB). This allows the highlighting of certain objects of interest.
+This steps helps improve the speed of the algorithm since the algorithm has to only deal with 8-bits of color instead of 24-bits. The grayscale conversion function can be provided with weight parameters for red, green and blue (RGB). This allows the highlighting of certain objects of interest.\\ \\
+\includegraphics[scale=3]{gray}
 
 \textbf{Neighbor-Matrix:}
 The neighbor matrix is just there to determine which fields are of interest. For example when processing the first image there is only information on the part of the image that has been processed while further iterations have information on previous run throughs. The matrix is always relative to the pixel in the image that is being processed.
