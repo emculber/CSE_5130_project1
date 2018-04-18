@@ -467,7 +467,7 @@ For the NEAT algorithm are input was the image of the screen. Are image was 256x
   \captionof{figure}{Pixelated}
   \label{fig:test2}
 \end{minipage}
-\end{figure}
+\end{figure}w
 
 We were not able to get this algorithm to work either and the reasons why we think the NEAT algorithm failed was, for two reasons, there are too many inputs or we did not give it enough time to train. Even though we reduced the inputs from are original 172,032 inputs to 2,688 inputs we did not take into account that because the NEAT algorithm starts off with 0 hidden nodes that it would take so long to generate a full connected graph that could take in all those inputs and create meaningful connection between all of the nodes. One solution to this is to do more image processing beforehand to find all the variables such as player position, enemy position, and so on to reduce the number of inputs which give the algorithm a chance to learn what the meaning behind the inputs are. 
 
@@ -476,6 +476,7 @@ Another solution would be to allow the algorithm to learn for a longer period of
 \begin{figure}
 \centering
   \includegraphics[width=1\linewidth]{avg_fitness.png}
+  \captionof{figure}{Fitness}
 \end{figure}
 
 Another problem with our algorithm is that it took a very long time to learn. It took roughly 6 days to learn 121 generations. There are a couple of ways we think we can improve this time. The easiest being to introduce a timeout function that will fail the network after a set number of frames that have not added to the fitness of the network.
@@ -485,9 +486,6 @@ We set out to create an algorithm that could learn and play virtually any game b
 
 \section{What we learned and Future Ideas}
 We had a lot of trouble connecting so many different, separate ideas, together. Especially connecting the image processing to our Learning algorithms was a big slow down for us. It is also not possible to get lua sockets on a Windows machine, a problem that prevented one of the researchers in improving QLearning, since he had Windows. There are better image processing libraries out there we would like to experiment with, such as Tensorflow. This could more readily solve the issue of classifying objects. NEAT and QLearning could both be greatly improved, as well as the inputs received by them could be improved so they can show learning and improvement more robustly. As is always the case with life, as the project went on, new ideas were brought to our attention continuously that we didn’t have time to implement or look into in great detail. We would like more time to experiment with more learning algorithms in the future.
-
-
-\section{Conclusion}
 
 \begin{thebibliography}{1}
 
