@@ -134,11 +134,20 @@ def process_image(path):
 
     #for k, v in ob.items():
     #    cv.rectangle(rs, (v.top, v.left), (v.bottom, v.right), (0, 255, 0))
+    #    cv.rectangle(rs, (v.top, v.left), (v.bottom, v.right), (0, 255, 0))
     print(len(ob))
 
+    cv.imwrite('frame626_objects.png', im)
     cv.imshow('grey', rs)
     cv.waitKey(0)
     cv.destroyAllWindows()
+
+    #cv.imshow('grey', im)#
+    #cv.waitKey(0)
+    #cv.destroyAllWindows()
+
+    print(len(ob))
+    
 
     return ob
 
