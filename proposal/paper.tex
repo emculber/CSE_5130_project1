@@ -367,6 +367,8 @@ pdfkeywords={Computer Society, IEEEtran, journal, LaTeX, paper,
 \hyphenation{op-tical net-works semi-conduc-tor}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
+\usepackage{caption}
+\usepackage{subcaption}
 
 \begin{document}
 \title{Image Processing for Discovering\\ the Rules of Video Games}
@@ -434,9 +436,48 @@ Our QLearning algorithm would take as input the boundaries of the screen, locati
 \section{NEAT (Neuro-Evolution Augmenting Topologies)}
 Our NEAT algorithm was the second algorithm we tried but it did not fare better than Q-Learning. NEAT, better explained in the original paper \cite{8}, is a population of full neural networks that use a genetic algorithm to form the neural network structure and weights. This allows the algorithm to find a minimalist neural network that can complete the task at hand. 
 
+For the NEAT algorithm are input was the image of the screen. Are image was 256x224 colored image which ment that we had to have 172,032 inputs to be able to hand the size of the image and the 3 RGB values per pixel. This was way to large for the NEAT alogrithm to handle to to reduce it we pixelated the image into a 28x32 image as shown in figure 1-4. By doing this we were able to reduce are input to 2,688 still taking into account the RGB values of each pixel. Are outputs to are neural network were the 4 inputs the game accepted Up, Down, Left, and Right.
+
+\begin{figure}
+\centering
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{Original1.png}
+  \captionof{figure}{Original}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{pixel1.png}
+  \captionof{figure}{Pixelated}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+\begin{figure}
+\centering
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{Original2.png}
+  \captionof{figure}{Original}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.25\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{pixel2.png}
+  \captionof{figure}{Pixelated}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
 We were not able to get this algorithm to work either and the reasons why we think the NEAT algorithm failed was, for two reasons, there are too many inputs or we did not give it enough time to train. Even though we reduced the inputs from are original 172,032 inputs to 2,688 inputs we did not take into account that because the NEAT algorithm starts off with 0 hidden nodes that it would take so long to generate a full connected graph that could take in all those inputs and create meaningful connection between all of the nodes. One solution to this is to do more image processing beforehand to find all the variables such as player position, enemy position, and so on to reduce the number of inputs which give the algorithm a chance to learn what the meaning behind the inputs are. 
 
-Another solution would be to allow the algorithm to learn for a longer period of time. The NEAT algorithm ran for 121 generations with a population of 150. Over the 121 generations the best performing networks max fitness hovered around 39 out of 177 never showing improvement from generation to generation. As you can see from {FIGURE REF HERE} over generation 111 to 121 there is no improvement in the fitness. Given more time for the algorithm to build a bigger graph or reducing the input we believe that the algorithm would be able to improve its fitness.
+Another solution would be to allow the algorithm to learn for a longer period of time. The NEAT algorithm ran for 121 generations with a population of 150. Over the 121 generations the best performing networks max fitness hovered around 39 points out of the total 177 points and did not show much improvement from generation to generation as shown in figure 5. Given more time for the algorithm to build a bigger graph or reducing the input we believe that the algorithm would be able to improve its fitness.
+
+\begin{figure}
+\centering
+  \includegraphics[width=1\linewidth]{avg_fitness.png}
+\end{figure}
+
 Another problem with our algorithm is that it took a very long time to learn. It took roughly 6 days to learn 121 generations. There are a couple of ways we think we can improve this time. The easiest being to introduce a timeout function that will fail the network after a set number of frames that have not added to the fitness of the network.
 
 \section{Results}
