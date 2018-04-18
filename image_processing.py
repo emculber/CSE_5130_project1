@@ -7,7 +7,7 @@ import sys
 
 import cv2 as cv
 #import numpy as np
-#from PIL import Image
+from PIL import Image
 
 
 class g_obj(list):
@@ -77,7 +77,10 @@ def process_image(path):
     for now it converts the image to a numpy array
     """
     im = cv.imread(path)
-    gr = cv.cvtColor(im, cv.COLOR_BGR2GRAY)
+    rs = cv.resize(im, (int(im.shape[1]/6), int(im.shape[0]/6)))
+    cv.imwrite("6xdown.png", rs)
+    gr = cv.cvtColor(rs, cv.COLOR_BGR2GRAY)
+    cv.imwrite("gray.png", gr)
 
     #try to find the background color
     #usually the color with the highest amount
@@ -130,9 +133,10 @@ def process_image(path):
         ob_map[(x, y)] = ind
 
     #for k, v in ob.items():
-    #    cv.rectangle(im, (v.top, v.left), (v.bottom, v.right), (0, 255, 0))
+    #    cv.rectangle(rs, (v.top, v.left), (v.bottom, v.right), (0, 255, 0))
+    print(len(ob))
 
-    cv.imshow('grey', im)#cv.resize(cv.resize(im, (0,0), fx=0.25, fy=0.25), (im.shape[1], im.shape[0])))
+    cv.imshow('grey', rs)
     cv.waitKey(0)
     cv.destroyAllWindows()
 
