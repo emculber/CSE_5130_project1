@@ -44,8 +44,13 @@ class Bridge:
         pixelSize = 8
         image = Image.fromarray(screen)
         image = image.resize((image.size[0]/pixelSize, image.size[1]/pixelSize), Image.NEAREST)
+        imgarray = numpy.array(image)
+        convarray = numpy.zeros((len(imgarray), len(imgarray[0])))
+        for i in range(len(imgarray)):
+            for x in range(len(imgarray[i])):
+                convarray[i][x] = sum(imgarray[i][x])
         # image = image.resize((image.size[0]*pixelSize, image.size[1]*pixelSize), Image.NEAREST)
-        return numpy.array(image)
+        return convarray
 
     def cord(self):
         xy = self.askAndYouShalReceive("location:get")
@@ -71,6 +76,16 @@ class Bridge:
         self.x = x
         self.y = y
         return x, y, screen, reward, done
+
+    def stepScore(self, action):
+        self.askAndYouShalReceive("key:" + action);
+        reward = int(self.askAndYouShalReceive("pellets:get"))
+        sdone = self.askAndYouShalReceive("done:get")
+        done = False
+        if sdone == 'True':
+            done = True
+
+        return reward, done
     
 if __name__ == "__main__":
     bridge = Bridge()

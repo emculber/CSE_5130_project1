@@ -5,8 +5,6 @@ local client = nil;
 local skip = 0
 local lastInput = 'none'
 local dontRender = false
-local points = 0
-local diff_points = 0
 
 print("Listending over " .. ip .. " on port " .. port)
 
@@ -79,23 +77,27 @@ function loadState()
   emu.softreset()
   state = savestate.create(1)
   savestate.load(state)
-  emu.speedmode("turbo")
-  points = 0
+  emu.speedmode("normal")
 end
 
-function setPoints()
-  possible_points = memory.readbyterange(0x0308,7)
-  possible_points = possible_points:gsub('[^0-9]','')
-  if possible_points == '' then
-    possible_points = "-1"
-  end
-  possible_points = tonumber(possible_points)
-  if possible_points > points and possible_points < (points + 1011) then
-    diff_points = possible_points - points
-    points = possible_points
-  elseif possible_points == 0 then
-    points = 0
-  end
+function getPoints()
+  d1 = memory.readbyte(0x0040)
+  d2 = memory.readbyte(0x0041)
+  d3 = memory.readbyte(0x0042)
+  d4 = memory.readbyte(0x0043)
+  d5 = memory.readbyte(0x0044)
+  d6 = memory.readbyte(0x0045)
+
+  points = d1 .. d2 .. d3 .. d4 .. d5 .. d6
+  points = tonumber(points)
+  return points
+end
+
+function getPellets()
+  print("Reading Pellets")
+  p = memory.readbyte(0x003d)
+  print("Pellets: " .. p)
+  return p
 end
 
 connectSocket()
@@ -107,8 +109,7 @@ while true do
 
     if sentType == "key" then
       handleInput(value)
-      diff_points = 0
-      skip = 5
+      skip = 2
     elseif sentType == "get" then
       client:send(getInputs())
     elseif sentType == "screen" then
@@ -120,8 +121,10 @@ while true do
       client:send(mspacman['x'] .. "," .. mspacman['y'])
       dontRender = true
     elseif sentType == "points" then
-      client:send(diff_points)
-      diff_points = 0
+      client:send(getPoints())
+      dontRender = true
+    elseif sentType == "pellets" then
+      client:send(getPellets())
       dontRender = true
     elseif sentType == "reset" then
       loadState()
@@ -140,6 +143,8 @@ while true do
     elseif sentType == "close" then
       killSocketConnection()
       connectSocket()
+    else
+      print("Unknown Key")
     end
   else
     --print("skipping socket listener")
@@ -148,9 +153,8 @@ while true do
       client:send("Finished")
     end
   end
-  setPoints()
   if dontRender == false then
-    emu.message(lastInput);
+    --emu.message(lastInput);
     FCEU.frameadvance();
   end
   dontRender = false
