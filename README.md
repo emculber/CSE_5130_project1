@@ -3,8 +3,8 @@ RUN SCRIPT
 
 1. Open FCEUX
 2. Go to file and open ROM and select the Ms. Pac-Man (U) [!].nes
-3. Go to file and Load Lua script and select MsPacManDragAndDrop.lua
-4. run python bridge.py or using your script call 'connectToSocket' to create the socet connection
+3. Go to file and Load Lua script and select bridge.lua
+4. run python neatImp.py to run the NEAT algorithm
 
 bridge.py methods
 ================
